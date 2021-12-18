@@ -4,10 +4,10 @@ library(lubridate)
 library(firatheme)
 library(forcats)
 library(viridis)
-library(plotly)
 library(ggthemes)
 library(scales)
-library(cowplot)
+library(grid)
+library(gridExtra)
 options(scipen = 999)
 
 
@@ -17,6 +17,7 @@ spotify <- fromJSON("StreamingHistory0.json")
 spotify$endTime <- as.POSIXct(spotify$endTime)
 
 str(spotify)
+
 
 ### Top 20 bar chart
 
@@ -122,12 +123,12 @@ polar <- by_hour %>%
         
 
 
-grid.arrange(mes_bar,polar,heatmap,toop20,top = textGrob('Spotify Wrapped: R Edition',
+wrapped <- grid.arrange(mes_bar,polar,heatmap,toop20,top = textGrob('Spotify Wrapped: R Edition',
                                                          gp=gpar(fontsize=20,font=3), hjust = -0.2)) 
 
 
 
 
 
-
+ggsave("wrappped.jpg",plot = wrapped, width = 60,height = 40,units = "cm", dpi = 300)
 
